@@ -112,7 +112,7 @@ BOOL CTestLibDemoDlg::OnInitDialog()
 
 	InitLog();
 	TakeLog("OnInitDialog", "fffffffffffffffffuck");
-	//MYTVLog(strContent.GetBuffer(0));
+	//MYTVLog(strContent.GetBuffer(0));1
 	MYTVLog("123","222");
 	MYTVError("123");
 	MYTVTraceBegin("123");
