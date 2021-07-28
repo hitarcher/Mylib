@@ -28,21 +28,6 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 
-	HANDLE hTest;
-	HANDLE hTestEvent;
-	static DWORD WINAPI	 TestThreadProc(LPVOID pParam);
-	DWORD WINAPI TestThreadContent(LPVOID pParam);
-
-	HANDLE hTest2;
-	HANDLE hTestEvent2;
-	static DWORD WINAPI	 TestThreadProc2(LPVOID pParam);
-	DWORD WINAPI TestThreadContent2(LPVOID pParam);
-
-	HANDLE hThread[3];
-	HANDLE hThreadEvent[3];
-	static DWORD WINAPI	 TestMultipleThreadProc(LPVOID pParam);
-	DWORD WINAPI TestMultipleThreadContent(LPVOID pParam);
-
 	//创建bat文件
 	void CTestLibDemoDlg::WriteStartBat1(CString strLoad);
 public:
@@ -83,3 +68,4 @@ void testPython2();
 int testPython4();
 void testbooble();
 void testUnicode();
+void testlambda();

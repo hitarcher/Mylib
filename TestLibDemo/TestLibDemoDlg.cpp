@@ -25,43 +25,16 @@ CRITICAL_SECTION g_cs;
 
 #include  <direct.h>  
 #pragma comment(lib,"URlmon")
-
-struct ThreadInfo
-{
-	HANDLE hEvent;
-	CString strPicPath;
-	CString strIpsource;
-	BOOL bcoustomState;
-	int faceId;
-	CTestLibDemoDlg* pThis;
-	CString strBase64;
-};
-
 // CTestLibDemoDlg 对话框
 BOOL g_bExit = FALSE;
-ThreadInfo g_pthInfo;
 
+#include<functional>
 void 	testPoint();
 void	testPoint2();
 CTestLibDemoDlg::CTestLibDemoDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_TESTLIBDEMO_DIALOG, pParent)
 	, m_static1(_T(""))
 {
-	hTest = NULL;
-	
-	/*	1 null // SECURITY_ATTRIBUTES结构指针，可为NULL | 4 null //事件的名称
-	2 manual 手动 manualReset 手动复位 
-	3 initStatus 复位状态为假，阻塞 */
-	hTestEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-
-	hThread[3] = NULL;
-	for (int i=0;i<3;i++)
-	{
-		hThreadEvent[i] = CreateEvent(NULL, FALSE, FALSE, NULL);//设置成自复位类型，否则，似乎会调用三次
-	}
-
-	hTest2 =NULL;
-	hTestEvent2 = CreateEvent(NULL, TRUE, FALSE, NULL);
 
 	Gdiplus::GdiplusStartupInput m_GdiplusStarupInput;
 	ULONG_PTR m_uGdiplusToken;
@@ -99,17 +72,15 @@ BOOL CTestLibDemoDlg::OnInitDialog()
 
 	CString strIp = CheckIP();
 	CString strMac1 = GetMacAddress(2);
-	char a[1024];
 	char b[1024];
 	char c[1024];
+ 	ObtainCPUID(b);
+ 	ObtainHDID(c);
 
-// 	ObtainMAC(a);
-// 	ObtainCPUID(b);
-// 	ObtainHDID(c);
+	CString sttt = "{\"serialNo\":\"1100121\",\"channnelType\":\"001\",\"transCode\":\"300001\",\"instNO\":\"320123\",\"winNO\":\"1\",\"tellrCode\":\"1001\",\"reqNO\":\"X003\",\"realBusType\":\"cashService\",\"discard\":3}";
+	int lne = strlen(sttt);
 
-	auto aaa = new auto (1);
-
-
+	testlambda();
 	InitLog();
 	TakeLog("OnInitDialog", "fffffffffffffffffuck");
 	//MYTVLog(strContent.GetBuffer(0));1
@@ -119,19 +90,7 @@ BOOL CTestLibDemoDlg::OnInitDialog()
 	MYTVTraceEnd("123");
 	MYTVLogEx("123","456","2222");
 	KKLogInfo("123", "456");
-	DWORD dwThreadId = 0;
-	//1 单线程
-	//传入this指针，this,传入回调函数 TestThreadProc
-	hTest = CreateThread(NULL, 0, TestThreadProc, this, 0, &dwThreadId);
-	//2 多线程
-	for (int i = 0; i < 3; i++)
-	{
-		hThread[i] = CreateThread(NULL, 0, TestMultipleThreadProc, this, 0, &dwThreadId);
-	}
-	//3 单线程 传参改变
-	g_pthInfo.pThis = this;
-	g_pthInfo.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-	hTest2 = CreateThread(NULL, 0, TestThreadProc2, &g_pthInfo, 0, &dwThreadId);
+
 
 // 	char buffer[MAX_PATH];
 // 	_getcwd(buffer, MAX_PATH);
@@ -141,8 +100,6 @@ BOOL CTestLibDemoDlg::OnInitDialog()
 	 string savepath = "D://abc.index";
 	 download(downurl, savepath);
 
-	//SetEvent(hTestEvent);
-	SetEvent(hThreadEvent[2]);
 
 // 	for (int i=0;i<10;i++)
 // 	{
@@ -245,117 +202,6 @@ void CTestLibDemoDlg::OnPaint()
 HCURSOR CTestLibDemoDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
-}
-
-DWORD CTestLibDemoDlg:: TestThreadProc(LPVOID pParam)
-{
-	CTestLibDemoDlg *pDlg = (CTestLibDemoDlg *)pParam;
-	return pDlg->TestThreadContent(pParam);
-}
-
-DWORD CTestLibDemoDlg::TestThreadContent(LPVOID pParam)
-{
-	while (FALSE == g_bExit)
-	{
-		DWORD dwResult = WaitForSingleObject(hTestEvent, INFINITE); //等待一个进程结束
-		//DWORD dwResult = WaitForSingleObject(hTestEvent, 5000); //等待5秒，无论收到与否，都进入WAIT_TIMEOUT
-		switch (dwResult)
-		{
-		case WAIT_OBJECT_0:
-			// hProcess所代表的进程在5秒内结束
-			AfxMessageBox("2");
-			break;
-
-		case WAIT_TIMEOUT:
-			// 等待时间超过5秒
-			AfxMessageBox("1");
-			break;
-
-		case WAIT_FAILED:
-			// 函数调用失败，比如传递了一个无效的句柄,
-			//hTestEvent 被赋值为null,然后setEvent(hTestEvent),触发WaitForSingleObject,会进入WAIT_FAILED
-			AfxMessageBox("3");
-			break;
-		}
-		ResetEvent(hTestEvent);
-	}
-	return TRUE;
-}
-
-DWORD CTestLibDemoDlg::TestMultipleThreadProc(LPVOID pParam)
-{
-	CTestLibDemoDlg *pDlg = (CTestLibDemoDlg *)pParam;
-	return pDlg->TestMultipleThreadContent(pParam);
-}
-
-DWORD CTestLibDemoDlg::TestMultipleThreadContent(LPVOID pParam)
-{
-	DWORD dw = WaitForMultipleObjects(3, hThreadEvent, FALSE, INFINITE); //等待3个进程结束
-
-	switch (dw)
-	{
-	case WAIT_FAILED:
-		// 函数呼叫失败
-		break;
-
-	case WAIT_TIMEOUT:
-		// 超时
-		break;
-
-	case WAIT_OBJECT_0 + 0:
-		// h[0]（hProcess1）所代表的进程结束
-		AfxMessageBox("t1");
-		break;
-
-	case WAIT_OBJECT_0 + 1:
-		// h[1]（hProcess2）所代表的进程结束
-		AfxMessageBox("t2");
-		break;
-
-	case WAIT_OBJECT_0 + 2:
-		// h[2]（hProcess3）所代表的进程结束
-		AfxMessageBox("t3");
-
-		break;
-	}
-	return TRUE;
-}
-
-DWORD CTestLibDemoDlg::TestThreadProc2(LPVOID pParam)
-{
-	ThreadInfo *pDlg = (ThreadInfo *)pParam;
-	return pDlg->pThis->TestThreadContent2(pParam);
-}
-
-DWORD CTestLibDemoDlg::TestThreadContent2(LPVOID pParam)
-{
-	ThreadInfo*pthInfo = (ThreadInfo*)pParam;
-
-	while (FALSE == g_bExit)
-	{
-		DWORD dwResult = WaitForSingleObject(pthInfo->hEvent, INFINITE); //等待一个进程结束
-																	//DWORD dwResult = WaitForSingleObject(hTestEvent, 5000); //等待5秒，无论收到与否，都进入WAIT_TIMEOUT
-		switch (dwResult)
-		{
-		case WAIT_OBJECT_0:
-			// hProcess所代表的进程在5秒内结束
-			//AfxMessageBox("2");
-			break;
-
-		case WAIT_TIMEOUT:
-			// 等待时间超过5秒
-			AfxMessageBox("1");
-			break;
-
-		case WAIT_FAILED:
-			// 函数调用失败，比如传递了一个无效的句柄,
-			//hTestEvent 被赋值为null,然后setEvent(hTestEvent),触发WaitForSingleObject,会进入WAIT_FAILED
-			AfxMessageBox("3");
-			break;
-		}
-		ResetEvent(hTestEvent);
-	}
-	return TRUE;
 }
 
 void CTestLibDemoDlg::WriteStartBat1(CString strLoad)
@@ -976,4 +822,30 @@ void testConst()
 // 
 // 	 int(*ptr)[3];//优先级顺序是 * 小于 ()，() 等于 []，() 和 [] 的优先级一样，但是结合顺序是从左到右，所以先是 () 里的 * 和 ptr 结合成为一个指针，
 	 //然后是 (*ptr) 和 [] 相结合成为一个数组，最后叫一个指针 ptr 指向一个数组，简称数组指针。
+ }
+
+
+
+ template <typename F>
+ void Myprint(F const &f) {
+	 std::cout << f() << std::endl;
+ }
+
+ void testlambda()
+ {
+	 // 定义简单的lambda表达式
+	 auto basicLambda = [] { cout << "Hello, world!" << endl; };
+	 // 调用
+	 basicLambda();   // 输出：Hello, world!
+ 
+	 auto addfun = [&](int a, int b) {return a + b; };
+	 addfun(1, 2);
+
+	 int x = 10;
+	 auto mulitiple_x = [&x](int a) mutable{x *= 2; return a*x; };
+	 cout << "x=%d" << x << endl;
+
+// 	 IsJsonData( [&](const CString &str) {
+// 		 return str;
+// 	 });
  }
