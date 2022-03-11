@@ -1094,6 +1094,18 @@ void test2()
 
 }
 
+void findch(CString &strTemp)
+{
+	char *pChar = strTemp.GetBuffer();
+	for (int m = 0; m < strTemp.GetLength(); m++)
+	{
+		if (pChar[m] >= 65 && pChar[m] <= 90)
+		{
+			strTemp += pChar[m];
+		}
+	}
+}
+
 #include "spdlog/spdlog.h"
 #include "spdlog/cfg/env.h" // for loading levels from the environment variable
 
@@ -1142,3 +1154,25 @@ void TakeLog(CString strTitle, CString strContent)
 	MYTVLog(strContent.GetBuffer(0));
 
  }
+
+//打开画图，并保存，存在一个问题，万一置顶不是它就麻烦了。
+void MspaintSave(CString strFilePat)
+{
+	CString strPath = strFilePat;
+	strPath.Replace("/", "\\");
+	CString strEnd = ("\"") + strPath + ("\""); //加引号是为了避免路径有空格,因为cmd命令不认空格
+	::ShellExecuteA(NULL, "open", "mspaint.exe", strEnd, NULL, SW_SHOWNORMAL); //只认'\\'路径
+																			   //HWND hWin = ::FindWindow("画图(32位)", NULL);
+	Sleep(5000);
+	keybd_event(VK_CONTROL, 0, 0, 0);
+	Sleep(50);
+	keybd_event(83, 0, 0, 0);
+	Sleep(2000);
+	keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);//抬起按键
+	Sleep(50);
+	keybd_event(83, 0, KEYEVENTF_KEYUP, 0);
+	Sleep(2000);
+
+	//KillProcess("mspaint.exe");
+	Sleep(2000);
+}

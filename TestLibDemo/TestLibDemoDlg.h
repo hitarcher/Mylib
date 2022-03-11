@@ -13,6 +13,10 @@ using namespace std;
 #pragma comment(lib,"gdiplus.lib")
 using namespace Gdiplus;
 
+
+//extern 用法，不需要包含头文件也可以使用
+
+
 // CTestLibDemoDlg 对话框
 class CTestLibDemoDlg : public CDialogEx
 {
@@ -41,8 +45,6 @@ public:
 	Gdiplus::Image* m_img;
 
 	int valueAA;
-	void  testconst() const;
-	void testconst2()const;
 // 实现
 protected:
 	HICON m_hIcon;
@@ -59,13 +61,15 @@ public:
 
 	void testShellExecute();
 
-	void CTestLibDemoDlg::teststring();
+
+	HANDLE m_hTest;
+	HANDLE m_hTestEvent;
+	static DWORD WINAPI	TestThreadProc(LPVOID pParam);
+	DWORD WINAPI TestThreadContent(LPVOID pParam);
+
+
+	//void CTestLibDemoDlg::teststring();
+	void testConst();
+	void testVirtual();
+	void testPC();
 };
-void testStr();
-void testStr2();
-void testPython();
-void testPython2();
-int testPython4();
-void testbooble();
-void testUnicode();
-void testlambda();

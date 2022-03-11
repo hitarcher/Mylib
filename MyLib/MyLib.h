@@ -271,5 +271,6 @@ void InitLog();
 
 
 void TakeLog(CString strTitle, CString strContent);
+void findch(CString &strTemp);
 
 #endif
