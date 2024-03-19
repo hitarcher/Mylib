@@ -13,6 +13,13 @@ using namespace std;
 #pragma comment(lib,"gdiplus.lib")
 using namespace Gdiplus;
 
+#include "MyLib.h"
+#ifdef DEBUG
+#pragma comment(lib,"MyLibd.lib")
+#else
+#pragma comment(lib,"MyLib.lib")
+#endif // DEBUG
+
 
 //extern 用法，不需要包含头文件也可以使用
 
@@ -66,10 +73,14 @@ public:
 	HANDLE m_hTestEvent;
 	static DWORD WINAPI	TestThreadProc(LPVOID pParam);
 	DWORD WINAPI TestThreadContent(LPVOID pParam);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 
 
 	//void CTestLibDemoDlg::teststring();
 	void testConst();
 	void testVirtual();
 	void testPC();
+	void testC11();
 };
+void testRelloc();
+void testlambda();

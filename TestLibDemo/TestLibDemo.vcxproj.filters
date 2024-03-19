@@ -13,24 +13,79 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="const">
-      <UniqueIdentifier>{95fad469-2b9b-4534-a706-36e4001b90e6}</UniqueIdentifier>
+    <Filter Include="include">
+      <UniqueIdentifier>{59463a1a-f0f3-4f20-b4ca-d2fcb3fb8b9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="inlineTest">
+    <Filter Include="Test_inline">
       <UniqueIdentifier>{a759c85e-282d-41b1-88df-fff668b1f4de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PFunc">
-      <UniqueIdentifier>{f91fb6a7-7f7a-4b2d-b7dd-1b0871eaaeae}</UniqueIdentifier>
+    <Filter Include="Test_virtualclass">
+      <UniqueIdentifier>{a269c915-203e-4288-abf8-c20b89f91c08}</UniqueIdentifier>
     </Filter>
-    <Filter Include="stringTest">
+    <Filter Include="Test_const">
+      <UniqueIdentifier>{95fad469-2b9b-4534-a706-36e4001b90e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\http">
+      <UniqueIdentifier>{2e0ee095-e4f0-4bb1-b678-317de9acd409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg">
+      <UniqueIdentifier>{6a14192c-3a69-4902-9333-0a275a12cdbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libavcodec">
+      <UniqueIdentifier>{535c2f89-1f89-4b7b-a654-e8829599f182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libavdevice">
+      <UniqueIdentifier>{fcd4a1ba-d43a-4be3-b776-f7523b0c7420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libavfilter">
+      <UniqueIdentifier>{999bcbc3-88db-41fb-a00b-7a0cd032deff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libavformat">
+      <UniqueIdentifier>{b6bf6ade-4466-4047-970f-f8a33fea29d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libavutil">
+      <UniqueIdentifier>{f0c6cdd7-92d1-4f59-86f4-16d6473860a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libpostproc">
+      <UniqueIdentifier>{198d4926-d8fa-4c32-891c-fc9a795a4a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libswresample">
+      <UniqueIdentifier>{74dcdc5d-a5c2-4bb9-8248-6a9bd97969df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ffmpeg\libswscale">
+      <UniqueIdentifier>{b21aea44-467e-4a3f-8019-750d25b5420c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_链表">
+      <UniqueIdentifier>{f9d1f79f-6392-4011-875a-cc0188c9ffe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_排序">
+      <UniqueIdentifier>{0ebc5c5d-5357-44c9-a967-4b3c5f320125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_C基础">
+      <UniqueIdentifier>{28b422ec-7870-44a9-9afd-0d1d100862ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Point">
+      <UniqueIdentifier>{44a176d3-8d94-40a2-b809-9f3547997e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_string转换">
       <UniqueIdentifier>{8743c608-cfe2-4d48-93ef-35c9ab701494}</UniqueIdentifier>
     </Filter>
-    <Filter Include="virtualclass">
-      <UniqueIdentifier>{a269c915-203e-4288-abf8-c20b89f91c08}</UniqueIdentifier>
+    <Filter Include="Test_模板类">
+      <UniqueIdentifier>{bd670792-d18e-4752-8fe0-c13567a66f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_容器">
+      <UniqueIdentifier>{f0fab5fa-9a79-4e42-9e80-cede44a22540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test_Regex">
+      <UniqueIdentifier>{058f72e4-a9b4-4847-a5c8-90cef98d466e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test lambda">
+      <UniqueIdentifier>{2b2f2a18-6322-493e-b00d-34adee172d87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="..\MyLib\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestLibDemo.h">
@@ -48,26 +103,458 @@
     <ClInclude Include="Resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\MyLib\MyLib.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="httpclient.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="..\code\virtualclass.h">
-      <Filter>virtualclass</Filter>
+      <Filter>Test_virtualclass</Filter>
     </ClInclude>
     <ClInclude Include="..\code\inlineTest.h">
-      <Filter>inlineTest</Filter>
+      <Filter>Test_inline</Filter>
     </ClInclude>
     <ClInclude Include="..\code\constTest.h">
-      <Filter>const</Filter>
-    </ClInclude>
-    <ClInclude Include="..\code\pfun.h">
-      <Filter>PFunc</Filter>
+      <Filter>Test_const</Filter>
     </ClInclude>
     <ClInclude Include="..\code\stringTest.h">
-      <Filter>stringTest</Filter>
+      <Filter>Test_string转换</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myhttp.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\mylog.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\myos.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\mystring.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\mytimer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\json.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\ac3_parser.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\adts_parser.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\avcodec.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\avdct.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\avfft.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\bsf.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\codec.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\codec_desc.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\codec_id.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\codec_par.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\d3d11va.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\defs.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\dirac.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\dv_profile.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\dxva2.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\jni.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\mediacodec.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\packet.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\qsv.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\vaapi.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\vdpau.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\version.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\videotoolbox.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\vorbis_parser.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavcodec\xvmc.h">
+      <Filter>include\ffmpeg\libavcodec</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavdevice\avdevice.h">
+      <Filter>include\ffmpeg\libavdevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavdevice\version.h">
+      <Filter>include\ffmpeg\libavdevice</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavfilter\avfilter.h">
+      <Filter>include\ffmpeg\libavfilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavfilter\buffersink.h">
+      <Filter>include\ffmpeg\libavfilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavfilter\buffersrc.h">
+      <Filter>include\ffmpeg\libavfilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavfilter\version.h">
+      <Filter>include\ffmpeg\libavfilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavformat\avformat.h">
+      <Filter>include\ffmpeg\libavformat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavformat\avio.h">
+      <Filter>include\ffmpeg\libavformat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavformat\version.h">
+      <Filter>include\ffmpeg\libavformat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\adler32.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\aes.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\aes_ctr.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\attributes.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\audio_fifo.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\avassert.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\avconfig.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\avstring.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\avutil.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\base64.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\blowfish.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\bprint.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\bswap.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\buffer.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\camellia.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\cast5.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\channel_layout.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\common.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\cpu.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\crc.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\des.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\detection_bbox.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\dict.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\display.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\dovi_meta.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\downmix_info.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\encryption_info.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\error.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\eval.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\ffversion.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\fifo.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\file.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\film_grain_params.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\frame.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hash.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hdr_dynamic_metadata.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hmac.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_cuda.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_d3d11va.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_drm.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_dxva2.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_mediacodec.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_opencl.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_qsv.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_vaapi.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_vdpau.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_videotoolbox.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\hwcontext_vulkan.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\imgutils.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\intfloat.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\intreadwrite.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\lfg.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\log.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\lzo.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\macros.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\mastering_display_metadata.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\mathematics.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\md5.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\mem.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\motion_vector.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\murmur3.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\opt.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\parseutils.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\pixdesc.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\pixelutils.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\pixfmt.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\random_seed.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\rational.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\rc4.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\replaygain.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\ripemd.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\samplefmt.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\sha.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\sha512.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\spherical.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\stereo3d.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\tea.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\threadmessage.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\time.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\timecode.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\timestamp.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\tree.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\twofish.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\tx.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\version.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\video_enc_params.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libavutil\xtea.h">
+      <Filter>include\ffmpeg\libavutil</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libpostproc\postprocess.h">
+      <Filter>include\ffmpeg\libpostproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libpostproc\version.h">
+      <Filter>include\ffmpeg\libpostproc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libswresample\swresample.h">
+      <Filter>include\ffmpeg\libswresample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libswresample\version.h">
+      <Filter>include\ffmpeg\libswresample</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libswscale\swscale.h">
+      <Filter>include\ffmpeg\libswscale</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\libswscale\version.h">
+      <Filter>include\ffmpeg\libswscale</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\inttypes.h">
+      <Filter>include\ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ffmpeg-5.0.1-full_build-shared\include\stdint.h">
+      <Filter>include\ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="TestC.h">
+      <Filter>Test_C基础</Filter>
+    </ClInclude>
+    <ClInclude Include="httpclient.h">
+      <Filter>include\http</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>Test_链表</Filter>
+    </ClInclude>
+    <ClInclude Include="Sort.h">
+      <Filter>Test_排序</Filter>
+    </ClInclude>
+    <ClInclude Include="PointTest.h">
+      <Filter>Test_Point</Filter>
+    </ClInclude>
+    <ClInclude Include="..\code\MyTemplate.h">
+      <Filter>Test_模板类</Filter>
+    </ClInclude>
+    <ClInclude Include="MyArray.hpp">
+      <Filter>Test_模板类</Filter>
+    </ClInclude>
+    <ClInclude Include="container.h">
+      <Filter>Test_容器</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRegex.h">
+      <Filter>Test_Regex</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MyLib\MyLib.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="TestLambda.h">
+      <Filter>Test lambda</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,20 +567,41 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="httpclient.cpp">
-      <Filter>头文件</Filter>
-    </ClCompile>
     <ClCompile Include="..\code\virtualclass.cpp">
-      <Filter>virtualclass</Filter>
+      <Filter>Test_virtualclass</Filter>
     </ClCompile>
     <ClCompile Include="..\code\constTest.cpp">
-      <Filter>const</Filter>
-    </ClCompile>
-    <ClCompile Include="..\code\pfun.cpp">
-      <Filter>PFunc</Filter>
+      <Filter>Test_const</Filter>
     </ClCompile>
     <ClCompile Include="..\code\stringTest.cpp">
-      <Filter>stringTest</Filter>
+      <Filter>Test_string转换</Filter>
+    </ClCompile>
+    <ClCompile Include="TestC.cpp">
+      <Filter>Test_C基础</Filter>
+    </ClCompile>
+    <ClCompile Include="httpclient.cpp">
+      <Filter>include\http</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedList.cpp">
+      <Filter>Test_链表</Filter>
+    </ClCompile>
+    <ClCompile Include="Sort.cpp">
+      <Filter>Test_排序</Filter>
+    </ClCompile>
+    <ClCompile Include="PointTest.cpp">
+      <Filter>Test_Point</Filter>
+    </ClCompile>
+    <ClCompile Include="..\code\MyTemplate.cpp">
+      <Filter>Test_模板类</Filter>
+    </ClCompile>
+    <ClCompile Include="container.cpp">
+      <Filter>Test_容器</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRegex.cpp">
+      <Filter>Test_Regex</Filter>
+    </ClCompile>
+    <ClCompile Include="TestLambda.cpp">
+      <Filter>Test lambda</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

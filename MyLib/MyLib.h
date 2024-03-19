@@ -52,6 +52,15 @@ BOOL CheckFileExist(CString strFilePath);
 \************************************************************************/
 bool RemoveDir(const char* szFileDir);
 
+//删除所有文件(Unicode环境下）
+void RemoveAllFiles(wstring wstrDir);
+
+// 拷贝文件
+BOOL copyFile(LPCTSTR lpExistingFileName,LPCTSTR lpNewFileName, BOOL bFailIfExists)
+{
+	return CopyFile(lpExistingFileName, lpNewFileName, bFailIfExists);
+}
+
 /************************************************************************\
 * 迁移文件，如果新路径中含有同名文件，则不会移动						*
 * 入参：旧全路径，新全路径，以及旧路径下的要转移的文件类型，如 *,jpg,mp4*
@@ -93,6 +102,20 @@ void ConvertGbkToUtf8(CString &strConvert);
 * 返回值： 无															*
 \************************************************************************/
 void  ConvertUtf8ToGbk(CString& strUtf8);
+
+/************************************************************************\
+* 将Unicode字符串转换为Ansicode字符串									*
+* 入参：source 为宽字节，dest 为多字节									*
+* 返回值： 无															*
+\************************************************************************/
+void ConvertUnicodeToAnsi(wchar_t* source, char* dest);
+
+/************************************************************************\
+* 将Ansicode字符串转换为Unicode字符串									*
+* 入参：source 为多字节，dest 为宽字节									*
+* 返回值： 无															*
+\************************************************************************/
+void ConvertAnsiToUnicode(wchar_t* source, char* dest);
 
 /************************************************************************\
 * 传入图片路径，进行base64加密											*
@@ -154,6 +177,9 @@ typedef enum
 }MY_TIME_TYPE;
 
 CString  GetCurTime(int nType);
+
+//修改时间，将YYYYMMDDHHMMSS 变成YYYY-MM-DD HH:MM:SS
+CString changeTime(CString strTime);
 
 /************************************************************************\
 * 修改g_configPath的值，默认为“config\\config.ini”					*
@@ -266,11 +292,37 @@ void deduplication(T& c)
 	}
 }
 
-void download(string dourl, string a);
-void InitLog();
+/****************************************************************************
+函数名称: 截屏
+函数功能: 获得当前页面的画面，保存到ScreenShot 文件夹内
+输入参数:
+输出参数:  图片的绝对路径
+*****************************************************************************/
+CString ScreenShot(void);
 
+//转换最多12位的数字，为中文念法;（可能有bug）
+void NumToCH(CString &str);
 
-void TakeLog(CString strTitle, CString strContent);
+//MD5加密,取从第8位开始的16位数字
+CString MD5Encrypt_16(CString strTem);
+
 void findch(CString &strTemp);
 
+
+std::string stows(std::wstring& ws);
+std::wstring s2ws(const std::string& s);
+
+//倒置字符串
+char* UpsideDown(char* a);
+
+int hexToDec(string hex);
+string DectoHex(int num);
+
+//1. 遍历某个目录下的所有文件
+void listFiles1(const char* dir);
+//2 遍历某个目录里的所有文件
+void listFiles2(const char* dir);
+
+//exepath 为程序路径（绝对路径）
+std::string GetSoftVersion(const char* exepath)
 #endif

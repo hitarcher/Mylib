@@ -4,14 +4,6 @@
 
 void testStr();
 void testStr2();
-void testPython();
-void testPython2();
-int testPython4();
-void testbooble();
-void testUnicode();
-void testlambda();
-
-
-
+void teststring();
 
 #endif // STRINGTEST_H_

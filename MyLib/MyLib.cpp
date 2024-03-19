@@ -9,7 +9,8 @@
 #include <audioclient.h>
 
 #include "Base64.h"
-
+//截屏头文件
+#include "MakePNG.h"
 CString g_configPath = "config//config.ini";
 //获得绝对路径
 CString getFullPath(CString strTempPath)
@@ -121,6 +122,21 @@ int GetWeekDay()
 	if (iPFTime < 0) iPFTime = 6;
 
 	return  iPFTime;
+}
+
+//修改时间，将YYYYMMDDHHMMSS 变成YYYY-MM-DD HH:MM:SS
+CString changeTime(CString strTime)
+{
+	CString strpart1 = strTime.Left(8);
+	CString strpart2 = strTime.Right(strTime.GetLength() - 8);
+
+	CString str1 = "";
+	str1.Format("%s-%s-%s ", strpart1.Left(4), strpart1.Mid(4, 2), strpart1.Right(2));
+
+	CString str2 = "";
+	str2.Format("%s:%s:%s", strpart2.Left(2), strpart2.Mid(2, 2), strpart2.Right(2));
+
+	return str1 + str2;
 }
 
 //修改音量，输入音量的值
@@ -269,6 +285,22 @@ void  ConvertUtf8ToGbk(CString& strUtf8)
 	strUtf8 = szGBK;
 	delete[]   szGBK;
 	delete[]   wszGBK;
+}
+
+// 将Unicode字符串转换为Ansicode字符串
+void ConvertUnicodeToAnsi(wchar_t* source, char* dest)
+{
+	int len = 0;
+	len = WideCharToMultiByte(CP_ACP, 0, source, -1, NULL, 0, NULL, NULL);
+	WideCharToMultiByte(CP_ACP, 0, source, -1, dest, len, NULL, NULL);
+}
+
+// 将Ansicode字符串转换为Unicode字符串
+void ConvertAnsiToUnicode(char* source, wchar_t* dest)
+{
+	int len = 0;
+	len = MultiByteToWideChar(CP_ACP, 0, source, -1, NULL, 0);
+	MultiByteToWideChar(CP_ACP, 0, source, -1, dest, len);
 }
 
 //传入图片路径，进行base64加密	
@@ -736,247 +768,179 @@ CString Base64EncodePic(CString strPath)
 	 DWORD  nResult = _unzip(strTargetFile, strResourceFullPath);
 	 return nResult;
  }
-	 
-#include <stdio.h>
-#include <tchar.h>
-#include <string>
-#include <string.h>
-#include <iostream>
-#include <windows.h>
-#include <Urlmon.h>
- using namespace std;
 
-#pragma comment(lib,"Urlmon.lib") //加入链接库
+  //屏幕截图,返回图片的路径
+  CString ScreenShot(void)
+  {
+ 	 CWnd *pDesktop = CWnd::FromHandle(GetDesktopWindow());
+ 	 CDC *pDC = pDesktop->GetDC();
+ 	 CRect rect;
+ 
+ 	 //获取窗口的大小  
+ 	 pDesktop->GetClientRect(&rect);
+ 
+ 	 //保存到的文件名
+ 	 CString strFileName(GetAppPathW());
+ 	 strFileName += _T("ScreenShot\\");
+ 	 CreateDirectory((LPCTSTR)strFileName, NULL);
+ 	 CTime t = CTime::GetCurrentTime();
+ 	 CString tt = t.Format("%Y%m%d_%H%M%S");
+ 	 strFileName += tt;
+ 	 strFileName += _T(".png");
 
- LPCWSTR stringToLPCWSTR(std::string orig)
- {
-	 size_t origsize = orig.length() + 1;
-	 const size_t newsize = 100;
-	 size_t convertedChars = 0;
-	 wchar_t *wcstring = (wchar_t *)malloc(sizeof(wchar_t)*(orig.length() - 1));
-	 mbstowcs_s(&convertedChars, wcstring, origsize, orig.c_str(), _TRUNCATE);
-
-
-	 return wcstring;
- }
-
- void download(string dourl, string a)
- {
-	 LPCWSTR url = stringToLPCWSTR(dourl);
-	 printf("下载链接: %S\n", url);
-	 TCHAR path[MAX_PATH];
-	 GetCurrentDirectory(MAX_PATH, path);
-	 LPCWSTR savepath = stringToLPCWSTR(a);
-	 wsprintf(path, (LPCSTR)savepath, path);
-	 printf("保存路径: %S\n", path);
-	 HRESULT res = URLDownloadToFile(NULL, (LPCSTR)url, path, 0, NULL);
-	 if (res == S_OK)
-	 {
-		 printf("下载完毕\n");
-	 }
-	 else if (res == E_OUTOFMEMORY)
-	 {
-		 printf("接收长度无效，或者并未定义\n");
-	 }
-	 else if (res == INET_E_DOWNLOAD_FAILURE)
-	 {
-		 printf("URL无效\n");
-	 }
-	 else
-	 {
-		 printf("未知错误\n", res);
-	 }
- }
-
-//  int main()
-//  {
-// 	 string downurl = "http://www.anyuer.club";
-// 	 string savepath = "D://abc.index";
-// 	 download(downurl, savepath);
-// 
-// 	 while (1);
-// 	 return  0;
-//  }
+ 	 //保存为PNG
+ 	 CMakePNG MakePNG;
+ 	 MakePNG.MakePNG(pDC->m_hDC, rect, strFileName);
+	 ::ReleaseDC(GetDesktopWindow(), pDC->m_hDC);
+ 	 return strFileName;
+  }
 
 
-
-
-
-
-
-
-
- // 屏幕截图,返回图片的路径
-//  CString ScreenShot(void)
-//  {
-// 	 CWnd *pDesktop = GetDesktopWindow();
-// 	 CDC *pDC = pDesktop->GetDC();
-// 	 CRect rect;
-// 
-// 	 //获取窗口的大小  
-// 	 pDesktop->GetClientRect(&rect);
-// 
-// 	 //保存到的文件名
-// 	 CString strFileName(GetAppPathW().c_str());
-// 	 strFileName += _T("ScreenShot\\");
-// 	 CreateDirectory((LPCTSTR)strFileName, NULL);
-// 	 CTime t = CTime::GetCurrentTime();
-// 	 CString tt = t.Format("%Y%m%d_%H%M%S");
-// 	 strFileName += tt;
-// 	 strFileName += _T(".png");
-// 	 //保存为PNG
-// 	 CMakePNG MakePNG;
-// 	 MakePNG.MakePNG(pDC->m_hDC, rect, strFileName);
-// 	 ReleaseDC(pDC);
-// 	 return strFileName;
-//  }
-
-
-/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/// 下载文件并保存为新文件名
-// BOOL HTTP_Download(CString strURL, CString strFilePath)
-// {
-// 	BOOL bRes = FALSE;
-// #define PATH_LEN 1024
-// 	//建立http连接
-// 	TCHAR szUserName[MAX_PATH] = { 0 };
-// 	TCHAR szPassword[MAX_PATH] = { 0 };
-// 	_tcscpy(szUserName, "");
-// 	_tcscpy(szPassword, "");
-// 
-// 	const TCHAR szHeaders[] = _T("Accept: */*\r\nUser-Agent:  Mozilla/4.0 (compatible; MSIE 5.00; Windows 98)\r\n");    //协议
-// 
-// 	CInternetSession    aInternetSession;        //一个会话
-// 	CHttpConnection*    pHttpConnection = NULL;    //链接
-// 	CHttpFile*          pHttpFile = NULL;
-// 	DWORD               dwFileStatus;
-// 	INTERNET_PORT       nPort;
-// 	DWORD               dwServiceType;
-// 	DWORD               dwDownloadSize = 0;
-// 	CString             strServer;
-// 	CString             strObject;
-// 
-// 	const int nBufferSize = 4096;
-// 	TCHAR szURL[nBufferSize] = { 0 };
-// 	UrlEncodeUtf8(strURL, szURL, nBufferSize);
-// 	strURL = szURL;
-// 
-// 	//分解URL
-// 	if (AfxParseURL(strURL, dwServiceType, strServer, strObject, nPort))
-// 	{
-// 		//如果服务类型是HTTP下载
-// 		if (dwServiceType != AFX_INET_SERVICE_HTTP && dwServiceType != AFX_INET_SERVICE_HTTPS)
-// 		{
-// 			//返回成功
-// 			return bRes;
-// 		}
-// 	}
-// 
-// 	try
-// 	{
-// 		pHttpConnection = aInternetSession.GetHttpConnection(strServer, nPort);
-// 		do
-// 		{
-// 			//如果失败则线程退出
-// 			if (pHttpConnection == NULL)
-// 				break;
-// 
-// 			//取得HttpFile对象
-// 			pHttpFile = pHttpConnection->OpenRequest(CHttpConnection::HTTP_VERB_GET,
-// 				strObject,
-// 				NULL,
-// 				1,
-// 				NULL,
-// 				NULL,
-// 				INTERNET_FLAG_RELOAD | INTERNET_FLAG_DONT_CACHE);
-// 
-// 			if (pHttpFile == NULL)
-// 				break;
-// 
-// 			pHttpFile->SetOption(INTERNET_OPTION_PROXY_USERNAME, szUserName, _tcslen(szUserName) + 1);
-// 			pHttpFile->SetOption(INTERNET_OPTION_PROXY_PASSWORD, szPassword, _tcslen(szPassword) + 1);
-// 
-// 			if (!pHttpFile->AddRequestHeaders(szHeaders))//增加请求头
-// 				break;
-// 
-// 			if (!pHttpFile->SendRequest())//发送文件请求
-// 				break;
-// 
-// 			if (!pHttpFile->QueryInfoStatusCode(dwFileStatus))//查询文件状态
-// 				break;
-// 
-// 			if ((dwFileStatus / 100) * 100 != HTTP_STATUS_OK)//如果文件状态正常
-// 				break;
-// 
-// 			CFile aFile;
-// 			if (!aFile.Open(strFilePath, CFile::modeCreate | CFile::modeWrite | CFile::typeBinary))
-// 				break;
-// 
-// 			DWORD dwFileLen;
-// 			DWORD dwWordSize = sizeof(dwFileLen);
-// 			pHttpFile->QueryInfo(HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_CONTENT_LENGTH, &dwFileLen, &dwWordSize, NULL);
-// 
-// 			do
-// 			{
-// 				BYTE szBuffer[PATH_LEN] = { 0 };
-// 				DWORD dwLen = pHttpFile->Read(szBuffer, PATH_LEN);//接收数据
-// 				if (dwLen == 0)
-// 					break;
-// 
-// 				aFile.Write(szBuffer, dwLen);
-// 				dwDownloadSize += dwLen;
-// 			} while (1);
-// 
-// 			aFile.Close();
-// 			DWORD dw = 0;
-// 			if (InternetQueryDataAvailable((HINTERNET)(*pHttpFile), &dw, 0, 0) && (dw == 0))
-// 				bRes = TRUE;//设置成功标志
-// 
-// 		} while (0);
-// 
-// 		if (pHttpFile != NULL)
-// 			delete pHttpFile;
-// 
-// 		if (pHttpConnection != NULL)
-// 			delete pHttpConnection;
-// 
-// 		//关闭http连接
-// 		aInternetSession.Close();
-// 	}
-// 	//异常处理
-// 	catch (CInternetException* e)
-// 	{
-// 		TCHAR   szCause[MAX_PATH] = { 0 };
-// 		//取得错误信息
-// 		e->GetErrorMessage(szCause, MAX_PATH);
-// 
-// 		TRACE("internet exception:%s\n", szCause);//错误信息写入日志
-// 
-// 		e->Delete();//删除异常对象
-// 
-// 		if (pHttpFile != NULL)//删除http文件对象
-// 			delete pHttpFile;
-// 
-// 		if (pHttpConnection != NULL)//删除http连接对象
-// 			delete pHttpConnection;
-// 
-// 		aInternetSession.Close();//关闭http连接
-// 	}
-// 	catch (...)
-// 	{
-// 		if (pHttpFile != NULL)//删除http文件对象
-// 			delete pHttpFile;
-// 
-// 		if (pHttpConnection != NULL)//删除http连接对象
-// 			delete pHttpConnection;
-// 
-// 		aInternetSession.Close();//关闭http连接
-// 	}
-// 
-// 	return bRes;
-// }
+// 下载文件并保存为新文件名,依赖MFC等头文件
+ //BOOL HTTP_Download(CString strURL, CString strFilePath)
+ //{
+ //	BOOL bRes = FALSE;
+ //#define PATH_LEN 1024
+ //	//建立http连接
+ //	TCHAR szUserName[MAX_PATH] = { 0 };
+ //	TCHAR szPassword[MAX_PATH] = { 0 };
+ //	_tcscpy(szUserName, "");
+ //	_tcscpy(szPassword, "");
+ //
+ //	const TCHAR szHeaders[] = _T("Accept: */*\r\nUser-Agent:  Mozilla/4.0 (compatible; MSIE 5.00; Windows 98)\r\n");    //协议
+ //
+ //	CInternetSession    aInternetSession;        //一个会话
+ //	CHttpConnection*    pHttpConnection = NULL;    //链接
+ //	CHttpFile*          pHttpFile = NULL;
+ //	DWORD               dwFileStatus;
+ //	INTERNET_PORT       nPort;
+ //	DWORD               dwServiceType;
+ //	DWORD               dwDownloadSize = 0;
+ //	CString             strServer;
+ //	CString             strObject;
+ //
+ //	const int nBufferSize = 4096;
+ //	TCHAR szURL[nBufferSize] = { 0 };
+ //	UrlEncodeUtf8(strURL, szURL, nBufferSize);
+ //	strURL = szURL;
+ //
+ //	//分解URL
+ //	if (AfxParseURL(strURL, dwServiceType, strServer, strObject, nPort))
+ //	{
+ //		//如果服务类型是HTTP下载
+ //		if (dwServiceType != AFX_INET_SERVICE_HTTP && dwServiceType != AFX_INET_SERVICE_HTTPS)
+ //		{
+ //			//返回成功
+ //			return bRes;
+ //		}
+ //	}
+ //
+ //	try
+ //	{
+ //		pHttpConnection = aInternetSession.GetHttpConnection(strServer, nPort);
+ //		do
+ //		{
+ //			//如果失败则线程退出
+ //			if (pHttpConnection == NULL)
+ //				break;
+ //
+ //			//取得HttpFile对象
+ //			pHttpFile = pHttpConnection->OpenRequest(CHttpConnection::HTTP_VERB_GET,
+ //				strObject,
+ //				NULL,
+ //				1,
+ //				NULL,
+ //				NULL,
+ //				INTERNET_FLAG_RELOAD | INTERNET_FLAG_DONT_CACHE);
+ //
+ //			if (pHttpFile == NULL)
+ //				break;
+ //
+ //			pHttpFile->SetOption(INTERNET_OPTION_PROXY_USERNAME, szUserName, _tcslen(szUserName) + 1);
+ //			pHttpFile->SetOption(INTERNET_OPTION_PROXY_PASSWORD, szPassword, _tcslen(szPassword) + 1);
+ //
+ //			if (!pHttpFile->AddRequestHeaders(szHeaders))//增加请求头
+ //				break;
+ //
+ //			if (!pHttpFile->SendRequest())//发送文件请求
+ //				break;
+ //
+ //			if (!pHttpFile->QueryInfoStatusCode(dwFileStatus))//查询文件状态
+ //				break;
+ //
+ //			if ((dwFileStatus / 100) * 100 != HTTP_STATUS_OK)//如果文件状态正常
+ //				break;
+ //
+ //			CFile aFile;
+ //			if (!aFile.Open(strFilePath, CFile::modeCreate | CFile::modeWrite | CFile::typeBinary))
+ //				break;
+ //
+ //			DWORD dwFileLen;
+ //			DWORD dwWordSize = sizeof(dwFileLen);
+ //			pHttpFile->QueryInfo(HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_CONTENT_LENGTH, &dwFileLen, &dwWordSize, NULL);
+ //
+ //			do
+ //			{
+ //				BYTE szBuffer[PATH_LEN] = { 0 };
+ //				DWORD dwLen = pHttpFile->Read(szBuffer, PATH_LEN);//接收数据
+ //				if (dwLen == 0)
+ //					break;
+ //
+ //				aFile.Write(szBuffer, dwLen);
+ //				dwDownloadSize += dwLen;
+ //			} while (1);
+ //
+ //			aFile.Close();
+ //			DWORD dw = 0;
+ //			if (InternetQueryDataAvailable((HINTERNET)(*pHttpFile), &dw, 0, 0) && (dw == 0))
+ //				bRes = TRUE;//设置成功标志
+ //
+ //		} while (0);
+ //
+ //		if (pHttpFile != NULL)
+ //			delete pHttpFile;
+ //
+ //		if (pHttpConnection != NULL)
+ //			delete pHttpConnection;
+ //
+ //		//关闭http连接
+ //		aInternetSession.Close();
+ //	}
+ //	//异常处理
+ //	catch (CInternetException* e)
+ //	{
+ //		TCHAR   szCause[MAX_PATH] = { 0 };
+ //		//取得错误信息
+ //		e->GetErrorMessage(szCause, MAX_PATH);
+ //
+ //		TRACE("internet exception:%s\n", szCause);//错误信息写入日志
+ //
+ //		e->Delete();//删除异常对象
+ //
+ //		if (pHttpFile != NULL)//删除http文件对象
+ //			delete pHttpFile;
+ //
+ //		if (pHttpConnection != NULL)//删除http连接对象
+ //			delete pHttpConnection;
+ //
+ //		aInternetSession.Close();//关闭http连接
+ //	}
+ //	catch (...)
+ //	{
+ //		if (pHttpFile != NULL)//删除http文件对象
+ //			delete pHttpFile;
+ //
+ //		if (pHttpConnection != NULL)//删除http连接对象
+ //			delete pHttpConnection;
+ //
+ //		aInternetSession.Close();//关闭http连接
+ //	}
+ //
+ //	return bRes;
+ //}
 
 //转换最多12位的数字，为中文念法
-void test(CString &str)
+void NumToCH(CString &str)
 {
 	// str = "123456789111";
 	 vector<CString>vecUnit;//单位，个十百千万
@@ -1056,14 +1020,12 @@ void test(CString &str)
 		str.Replace("一", "");
 	}
 
-	AfxMessageBox(str);
 }
 
-//测试加密的实例
-void test2()
+//MD5加密,取从第8位开始的16位数字
+CString MD5Encrypt_16(CString strTem)
 {
 	int i;
-	CString strTem = "123";
 	char* encrypt = strTem.GetBuffer(strTem.GetLength());//CStirng 转char*
 	unsigned char decrypt[16];
 
@@ -1073,25 +1035,27 @@ void test2()
 	MD5Final(&md5, decrypt);//32位
 
 	char ss[20] = {};
-	printf("加密前：%s\n加密后16位：", encrypt);
+	//printf("加密前：%s\n加密后16位：", encrypt);
 	int j = 0;
 	char p[200] = {};
 	char  buffer[200];
 
-		for (i = 4; i < 12; i++) {
-			printf("%02x", decrypt[i]);
-			sprintf(buffer, "%x", decrypt[i]); // C4996
-			p[j++] = buffer[0];//16进制转字符串
-			p[j++] = buffer[1];
-		}//p数组可视，decrypt不可视
-
-		 // 	DWORD dwd = HEXS((char*)decrypt);
-	printf("\n加密前：%s\n加密后32位：", encrypt);
-	for (int i = 0; i < 16; i++) {
+	for (i = 4; i < 12; i++) {
 		printf("%02x", decrypt[i]);
-	}
-	// 格式化并打印各种数据到buffer
+		sprintf(buffer, "%x", decrypt[i]); // C4996
+		p[j++] = buffer[0];//16进制转字符串
+		p[j++] = buffer[1];
+	}//p数组可视，decrypt不可视
 
+	// 	DWORD dwd = HEXS((char*)decrypt);
+	//printf("\n加密前：%s\n加密后32位：", encrypt);
+// 	for (int i = 0; i < 16; i++) {
+// 		printf("%02x", decrypt[i]);
+// 	}
+	// 格式化并打印各种数据到buffer
+	CString strResult = "";
+	strResult =decrypt;
+	return strResult;
 }
 
 void findch(CString &strTemp)
@@ -1106,73 +1070,273 @@ void findch(CString &strTemp)
 	}
 }
 
-#include "spdlog/spdlog.h"
-#include "spdlog/cfg/env.h" // for loading levels from the environment variable
-
- #include "spdlog/async.h"
- #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
-#include "spdlog/sinks/basic_file_sink.h"
-#include "spdlog/sinks/daily_file_sink.h"
-#include <spdlog/sinks/rotating_file_sink.h>
-#include "spdlog/spdlog-inl.h"
-
-std::shared_ptr<spdlog::logger> g_logger;
-void InitLog()
+std::string stows(std::wstring& ws)
 {
-	CString strPath = getFullPath("logs/DEBUG.txt");
-	// Create a daily logger - a new file is created every day on 2:30am
-	auto daily_logger = spdlog::daily_logger_mt("daily_logger", "logs/daily.txt", 2, 30);
-	// trigger flush if the log severity is error or higher
-	//只会在记录到debug级别的日志时记录，其他都不会记录
-	daily_logger->flush_on(spdlog::level::debug);
-	g_logger = daily_logger;	
+	std::string curLocale = setlocale(LC_ALL, NULL); // curLocale = "C";
+	setlocale(LC_ALL, "chs");
+	const wchar_t* _Source = ws.c_str();
+	size_t _Dsize = 2 * ws.size() + 1;
+	char* _Dest = new char[_Dsize];
+	memset(_Dest, 0, _Dsize);
+	wcstombs(_Dest, _Source, _Dsize);
+	std::string result = _Dest;
+	delete[]_Dest;
+	setlocale(LC_ALL, curLocale.c_str());
+	return result;
 }
-#include "mylog.hpp"
-#include "LogConfig.h"
-#include "LogProvider.h"
-#include "LogUserConfig.h"
+std::wstring s2ws(const std::string& s)
+{
+	setlocale(LC_ALL, "chs");
+	const char* _Source = s.c_str();
+	size_t _Dsize = s.size() + 1;
+	wchar_t* _Dest = new wchar_t[_Dsize];
+	wmemset(_Dest, 0, _Dsize);
+	mbstowcs(_Dest, _Source, _Dsize);
+	std::wstring result = _Dest;
+	delete[]_Dest;
+	setlocale(LC_ALL, "C");
+	return result;
+}
 
-#include <stdio.h>
-#include <iostream>
 
-#define __DEBUG__
-#ifdef __DEBUG__
-#define DEBUG(format,...) printf("File: "__FILE__", Line: %05d: "format"\n", __LINE__, ##__VA_ARGS__)
-#else
-#define DEBUG(format,...)
+//倒置字符串
+char* UpsideDown(char* a)
+{
+	char* p = a;
+	char* q = a + strlen(a) - 1;
+	for (; p < q; p++, q--)
+	{
+		char tmp = *p;
+		*p = *q;
+		*q = tmp;
+	}
+	printf("%s", a);
+	return p;
+}
+
+#ifdef _UNICODE
+
+void RemoveAllFiles(wstring wstrDir)
+{
+	if (wstrDir.empty())
+	{
+		return;
+	}
+	HANDLE hFind;
+	WIN32_FIND_DATA findData;
+	wstring wstrTempDir = wstrDir + (L"\\*");;
+	hFind = FindFirstFile(wstrTempDir.c_str(), &findData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		return;
+	}
+	do
+	{
+		// 忽略"."和".."两个结果
+		if (wcscmp(findData.cFileName, L".") == 0 || wcscmp(findData.cFileName, L"..") == 0)
+		{
+			continue;
+		}
+		wstring wstrFileName;
+		wstrFileName.assign(wstrDir);
+		wstrFileName.append(L"\\");
+		wstrFileName.append(findData.cFileName);
+		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)// 是否是目录
+		{
+			RemoveAllFiles(wstrFileName.c_str());
+		}
+		else
+		{
+			DeleteFile(wstrFileName.c_str());
+		}
+	} while (FindNextFile(hFind, &findData));
+	FindClose(hFind);
+	RemoveDirectory(wstrDir.c_str());
+}
+
+
+
 #endif
-void TakeLog(CString strTitle, CString strContent)
+
+
+//1. 遍历某个目录下的所有文件
+void listFiles1(const char* dir)
 {
-	CString strMsg = "";
-	//strMsg.Format("%s%s %d", __FILE__, __LINE__, ##__VA_ARGS__);
-	char str[] = "Hello World";
-// 	DEBUG("A ha, check me: %s", str);
-// 
-// 
-// 	printf(__VA_ARGS__);
+	using namespace std;
+	HANDLE hFind;
+	WIN32_FIND_DATA findData;
+	LARGE_INTEGER size;
+	hFind = FindFirstFile(dir, &findData);
+	if (hFind == INVALID_HANDLE_VALUE)
+	{
+		cout << "Failed to find first file!\n";
+		return;
+	}
+	do
+	{
+		// 忽略"."和".."两个结果 
+		if (strcmp(findData.cFileName, ".") == 0 || strcmp(findData.cFileName, "..") == 0)
+			continue;
+		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)    // 是否是目录 
+		{
+			cout << findData.cFileName << "\t<dir>\n";
+		}
+		else
+		{
+			size.LowPart = findData.nFileSizeLow;
+			size.HighPart = findData.nFileSizeHigh;
+			cout << findData.cFileName << "\t" << size.QuadPart << " bytes\n";
+		}
+	} while (FindNextFile(hFind, &findData));
+	cout << "Done!\n";
+}
 
-	MYTVLog(strContent.GetBuffer(0));
-
- }
-
-//打开画图，并保存，存在一个问题，万一置顶不是它就麻烦了。
-void MspaintSave(CString strFilePat)
+//2 遍历某个目录里的所有文件
+void listFiles2(const char* dir)
 {
-	CString strPath = strFilePat;
-	strPath.Replace("/", "\\");
-	CString strEnd = ("\"") + strPath + ("\""); //加引号是为了避免路径有空格,因为cmd命令不认空格
-	::ShellExecuteA(NULL, "open", "mspaint.exe", strEnd, NULL, SW_SHOWNORMAL); //只认'\\'路径
-																			   //HWND hWin = ::FindWindow("画图(32位)", NULL);
-	Sleep(5000);
-	keybd_event(VK_CONTROL, 0, 0, 0);
-	Sleep(50);
-	keybd_event(83, 0, 0, 0);
-	Sleep(2000);
-	keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0);//抬起按键
-	Sleep(50);
-	keybd_event(83, 0, KEYEVENTF_KEYUP, 0);
-	Sleep(2000);
+	using namespace std;
 
-	//KillProcess("mspaint.exe");
-	Sleep(2000);
+	HANDLE hFind;
+	WIN32_FIND_DATA findData;
+	LARGE_INTEGER size;
+	char dirNew[100];
+
+	// 向目录加通配符，用于搜索第一个文件 
+	strcpy(dirNew, dir);
+	strcat(dirNew, "\\*.*");
+
+	hFind = FindFirstFile(dirNew, &findData);
+	do
+	{
+		// 是否是文件夹，并且名称不为"."或".." 
+		if (findData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY != 0
+			&& strcmp(findData.cFileName, ".") != 0
+			&& strcmp(findData.cFileName, "..") != 0
+			)
+		{
+			// 将dirNew设置为搜索到的目录，并进行下一轮搜索 
+			strcpy(dirNew, dir);
+			strcat(dirNew, "\\");
+			strcat(dirNew, findData.cFileName);
+			listFiles1(dirNew);
+		}
+		else
+		{
+			size.LowPart = findData.nFileSizeLow;
+			size.HighPart = findData.nFileSizeHigh;
+			cout << findData.cFileName << "\t" << size.QuadPart << " bytes\n";
+		}
+	} while (FindNextFile(hFind, &findData));
+
+	FindClose(hFind);
+}
+
+string DectoHex(int num)
+{
+	if (num == 0)
+		return "0";
+
+	string res = "";
+	string hex[16] = { "0", "1", "2", "3", "4", "5", "6", "7",
+					  "8", "9", "a", "b", "c", "d", "e", "f" };
+
+	unsigned int num2 = num;//无论正负，全部转换成无符号整型
+	while (num2)
+	{
+		res = hex[num2 % 16] + res;//取余即是最低位
+		num2 /= 16;
+	}
+	return "0x" + res;
+}
+int hexToDec(string hex) {
+	int len = hex.size();
+	int base = 1;
+	int dec = 0;
+
+	for (int i = len - 1; i >= 0; i--) {
+		if (hex[i] >= '0' && hex[i] <= '9') {
+			dec += (hex[i] - '0') * base;
+			base *= 16;
+		}
+		else if (hex[i] >= 'A' && hex[i] <= 'F') {
+			dec += (hex[i] - 'A' + 10) * base;
+			base *= 16;
+		}
+	}
+
+	return dec;
+}
+
+//exepath 为程序路径（绝对路径）
+std::string GetSoftVersion(const char* exepath)
+{
+	std::string strVersionInfo;
+	if (!exepath)
+		return strVersionInfo;
+	if (_access(exepath, 0) != 0)
+		return strVersionInfo;
+
+	HMODULE hDll = NULL;
+	char szDbgHelpPath[MAX_PATH];
+
+	sprintf_s(szDbgHelpPath, sizeof(szDbgHelpPath), "version.dll");
+	hDll = ::LoadLibraryA(szDbgHelpPath);
+	if (hDll == NULL)
+	{
+		return strVersionInfo;
+	}
+
+	typedef DWORD(WINAPI* func_GetFileVersionInfoSizeA)(LPCSTR, LPDWORD);
+	func_GetFileVersionInfoSizeA p_GetFileVersionInfoSizeA =
+		(func_GetFileVersionInfoSizeA)::GetProcAddress(hDll, "GetFileVersionInfoSizeA");
+
+
+	typedef DWORD(WINAPI* func_GetFileVersionInfoA)(LPCSTR, DWORD, DWORD, LPVOID);
+	func_GetFileVersionInfoA p_GetFileVersionInfoA =
+		(func_GetFileVersionInfoA)::GetProcAddress(hDll, "GetFileVersionInfoA");
+
+
+	typedef DWORD(WINAPI* func_VerQueryValueA)(LPCVOID, LPCSTR, LPVOID*, PUINT);
+	func_VerQueryValueA p_VerQueryValueA =
+		(func_VerQueryValueA)::GetProcAddress(hDll, "VerQueryValueA");
+
+
+	if (p_GetFileVersionInfoSizeA == NULL
+		|| p_GetFileVersionInfoA == NULL
+		|| p_VerQueryValueA == NULL)
+	{
+		if (hDll)
+		{
+			FreeLibrary(hDll);
+			hDll = NULL;
+		}
+		return strVersionInfo;
+	}
+
+	UINT infoSize = p_GetFileVersionInfoSizeA(exepath, 0);
+	if (infoSize != 0) {
+		strVersionInfo.resize(infoSize, 0);
+		char* pBuf = NULL;
+		pBuf = new char[infoSize];
+		VS_FIXEDFILEINFO* pVsInfo;
+		if (p_GetFileVersionInfoA(exepath, 0, infoSize, pBuf)) {
+			if (p_VerQueryValueA(pBuf, "\\", (void**)&pVsInfo, &infoSize))
+			{
+				sprintf_s(pBuf, infoSize, "%d.%d.%d.%d",
+					HIWORD(pVsInfo->dwFileVersionMS),
+					LOWORD(pVsInfo->dwFileVersionMS),
+					HIWORD(pVsInfo->dwFileVersionLS),
+					LOWORD(pVsInfo->dwFileVersionLS));
+
+				strVersionInfo = pBuf;
+			}
+		}
+		delete[] pBuf;
+	}
+
+	if (hDll)
+	{
+		FreeLibrary(hDll);
+	}
+	return strVersionInfo;
 }

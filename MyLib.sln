@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyLib", "MyLib\MyLib.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestLibDemo", "TestLibDemo\TestLibDemo.vcxproj", "{EC10E65D-5B86-4F33-B47A-8762A8AD9476}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "测试_设计模式", "DesignPatterns\ClassOperation.vcxproj", "{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{EC10E65D-5B86-4F33-B47A-8762A8AD9476}.Release|x64.Build.0 = Release|x64
 		{EC10E65D-5B86-4F33-B47A-8762A8AD9476}.Release|x86.ActiveCfg = Release|Win32
 		{EC10E65D-5B86-4F33-B47A-8762A8AD9476}.Release|x86.Build.0 = Release|Win32
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Debug|x64.ActiveCfg = Debug|x64
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Debug|x64.Build.0 = Debug|x64
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Debug|x86.ActiveCfg = Debug|Win32
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Debug|x86.Build.0 = Debug|Win32
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Release|x64.ActiveCfg = Release|x64
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Release|x64.Build.0 = Release|x64
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Release|x86.ActiveCfg = Release|Win32
+		{F04D7CC4-68F4-48E5-A2EE-6E09F2E18391}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
